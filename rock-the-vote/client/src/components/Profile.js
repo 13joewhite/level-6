@@ -1,18 +1,21 @@
-
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { UserContext } from "../context/UserProvider"
 import PostForm from './PostForm.js'
 import PostList from './PostList.js'
-import Post from './Post.js'
 
 
 export default function Profile(){
   const { 
     user: { username }, 
-    addPost, 
-    posts
+    addPost,  
+    posts,
+    getUserPosts
   } = useContext(UserContext)
 
+  useEffect(() => { // anytime the page gets loaded it calls getUserPosts which is keeping the posts rendered to the page
+    getUserPosts()
+  }, [])
+    
   return (
     <div className="profile">
       <h1>Welcome @{username}!</h1>
@@ -21,7 +24,9 @@ export default function Profile(){
         addPost={addPost}
       />
       <h3>Your Posts</h3>
-      <PostList posts={posts}/>
+      <PostList 
+        posts={posts}
+      />
     </div>
   )
 }

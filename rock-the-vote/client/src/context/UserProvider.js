@@ -1,4 +1,4 @@
-import React, { useState } from "react" 
+import React, { useState, useEffect } from "react" 
 import axios from "axios"
 
 export const UserContext = React.createContext()
@@ -18,40 +18,44 @@ export default function UserProvider(props) {
         posts: [],
         errMsg: ''
     }
-
+    
     const [userState, setUserState] = useState(initState)
+    
+    useEffect(() => {
+        return getAllPost()
+    }, [])
 
     function signup(credentials) {
         axios.post("/auth/signup", credentials)
-            .then(res => {
-                const { user, token } = res.data
-                localStorage.setItem("token", token)
-                localStorage.setItem("user", JSON.stringify(user))
-                setUserState(prevUserState => ({
-                    ...prevUserState,
-                    user,
-                    token
-                }))
-            })
-            .catch(err => handleAuthErr(err.response.data.errMsg))
+        .then(res => {
+            const { user, token } = res.data
+            localStorage.setItem("token", token)
+            localStorage.setItem("user", JSON.stringify(user))
+            setUserState(prevUserState => ({
+                ...prevUserState,
+                user,
+                token
+            }))
+        })
+        .catch(err => handleAuthErr(err.response.data.errMsg))
     }
-
+    
     function login(credentials) {
         axios.post("/auth/login", credentials)
-            .then(res => {
-                const { user, token } = res.data
-                localStorage.setItem("token", token)
-                localStorage.setItem("user", JSON.stringify(user))
-                getUserPosts()
-                setUserState(prevUserState => ({
-                    ...prevUserState,
-                    user,
-                    token
-                }))
-            })
-            .catch(err => handleAuthErr(err.response.data.errMsg))
+        .then(res => {
+            const { user, token } = res.data
+            localStorage.setItem("token", token)
+            localStorage.setItem("user", JSON.stringify(user))
+            getUserPosts()
+            setUserState(prevUserState => ({
+                ...prevUserState,
+                user,
+                token
+            }))
+        })
+        .catch(err => handleAuthErr(err.response.data.errMsg))
     }
-
+    
     function logout(){
         localStorage.removeItem("token")
         localStorage.removeItem("user")
@@ -83,6 +87,7 @@ export default function UserProvider(props) {
                     ...prevState,
                     posts: res.data
                 }))
+                return res.data
             })
             .catch(err => console.log(err.response.data.errMsg))
     }
@@ -100,9 +105,28 @@ export default function UserProvider(props) {
 
     function getAllPost() {
         userAxios.get("/api/post")
-            .then(res => console.log(res))
+        .then(res => {
+            setUserState(prevState => ({
+                ...prevState,
+                posts: res.data
+            }))
+        })
             .catch(err => console.log(err.response.data.errMsg))
     }
+
+    function likeDislikeClicked(boolean, postId, isPost) {
+        if(isPost) {
+            userAxios.post('/api/likeDislike', { post: postId, likeDislike: boolean })
+                .then(res => getAllPost())
+                .catch(err => console.log(err.response.data.errMsg))
+        } else {
+            userAxios.put(`/api/likeDislike/${postId}`, { likeDislike: boolean })
+                .then(res => getAllPost())
+                .catch(err => console.log(err.response.data.errMsg))
+        }
+    }
+
+    //make comment function in context
 
     return (
        <UserContext.Provider
@@ -113,7 +137,9 @@ export default function UserProvider(props) {
                 logout,
                 addPost,
                 resetAuthErr,
-                getAllPost
+                getAllPost,
+                getUserPosts,
+                likeDislikeClicked
             }}
        >
            { props.children }

@@ -4,7 +4,7 @@ const initInputs = {
   title: "",
   description: "",
   imgUrl: ""
-}
+} 
 
 export default function PostForm(props){
   const [inputs, setInputs] = useState(initInputs)
