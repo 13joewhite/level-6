@@ -7,11 +7,16 @@ export default function PostList(props){
   
   return (
     <div className="post-list">
-      { posts.map(post => 
-        <Post post={post} key={post._id}/>
-
-        )
-      }
+      { posts.sort((a, b) => { // goes through and sorts based on which one has a greater length of likes
+        let bTotal = b.likeDislike.filter(item => item.likeDislike === true).length
+        let aTotal = a.likeDislike.filter(item => item.likeDislike === true).length
+        return bTotal - aTotal 
+      }).map(post => 
+          <Post 
+            post={ post } 
+            key={ post._id }
+          />
+        )}
     </div>
   )
 }

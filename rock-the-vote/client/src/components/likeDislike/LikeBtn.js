@@ -4,7 +4,7 @@ import "./likeDislike.css"
 
 export default function LikeBtn(props) {
     const { 
-        likeDislikeClicked 
+        likeDislikeClicked
       } = useContext(UserContext)
 
     return( 
@@ -13,7 +13,8 @@ export default function LikeBtn(props) {
             className={props.highlighted ? 
             "highlighted" : 
             null} 
-            onClick={() => likeDislikeClicked(true, props._id, props.isPost)}>
+            onClick={() => likeDislikeClicked(true, props._id, props.isPost)}
+        >
             Like {props.likesTotal}
         </button>
     )

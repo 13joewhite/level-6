@@ -3,7 +3,6 @@ import { UserContext } from "../context/UserProvider"
 import PostForm from './PostForm.js'
 import PostList from './PostList.js'
 
-
 export default function Profile(){
   const { 
     user: { username }, 

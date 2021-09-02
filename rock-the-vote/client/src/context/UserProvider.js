@@ -115,6 +115,33 @@ export default function UserProvider(props) {
     }
 
     function likeDislikeClicked(boolean, postId, isPost) {
+        console.log(boolean, postId, isPost)
+        const newPosts = userState.posts.map((post) => {
+            if(post._id === postId) {
+                // get post and change likeDislike array to reflect new likeDislike
+                let isNew = true
+                post.likeDislike.forEach(disObj => {
+                    if (disObj.user === userState.user._id) isNew = false;
+                })
+                console.log(isNew)
+                if (!isNew){
+                    // user already posted a like review, find and modify
+                    return {...post, likeDislike: post.likeDislike.map((disObj) => disObj.user === userState.user._id ? {...disObj, likeDislike: boolean } : disObj )}
+                } else {
+                    // user has not made review for this post yet, add
+                    return {...post, likeDislike: [...post.likeDislike, {likeDislike: boolean, post: postId, user: userState.user._id}]}
+                }
+                // by returning, add new likeDislike obj to post array 
+            } else {
+               return post 
+            }  
+        })
+        // set userState.posts to newPosts
+        console.log(newPosts)
+        setUserState(prevState => ({
+            ...prevState,
+            posts: newPosts
+        }))
         if(isPost) {
             userAxios.post('/api/likeDislike', { post: postId, likeDislike: boolean })
                 .then(res => getAllPost())
@@ -126,7 +153,11 @@ export default function UserProvider(props) {
         }
     }
 
-    //make comment function in context
+    function commenting(newComment) {
+        userAxios.post('/api/comment',  newComment)
+            .then(res => getAllPost())
+            .catch(err => console.log(err.response.data.errMsg))
+    }
 
     return (
        <UserContext.Provider
@@ -139,7 +170,8 @@ export default function UserProvider(props) {
                 resetAuthErr,
                 getAllPost,
                 getUserPosts,
-                likeDislikeClicked
+                likeDislikeClicked,
+                commenting
             }}
        >
            { props.children }

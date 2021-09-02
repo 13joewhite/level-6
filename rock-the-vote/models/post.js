@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const LikeDislike = require('./likedislike')
 
 const postSchema = new Schema({
   title: {
@@ -27,10 +26,12 @@ const postSchema = new Schema({
     type: Schema.Types.Array,
     ref: "LikeDislike",
     required: false
+  },
+  comment: {
+    type: Schema.Types.Array,
+    ref: "Comment",
+    required: false
   }
-  // comments: {
-  // similar to the likeDislike
-  //}
 })
 
 module.exports = mongoose.model("Post", postSchema)

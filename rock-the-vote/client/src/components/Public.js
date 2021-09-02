@@ -15,7 +15,9 @@ export default function Public(){ // do what was done in the profile.js here for
 
   return (
     <div className="profile">
-      <PostList posts={posts}/>
+      <PostList 
+        posts={ posts }
+      />
     </div>
   )
 }

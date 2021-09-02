@@ -1,6 +1,5 @@
 const express = require("express")
 const likeDislikeRouter = express.Router()
-const LikeDislike = require('../models/likedislike')
 const Post = require('../models/post')
 
 //get likesDislikes by post ID
