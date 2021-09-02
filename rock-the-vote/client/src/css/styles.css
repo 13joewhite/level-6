@@ -21,6 +21,7 @@
   }
   
   .auth-container {
+    padding-top: 8%;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -75,7 +76,7 @@
     align-items: center;
     justify-content: center;
     background-color: rgba(0, 128, 128, 0.281);
-    border-radius: 25px;
+    border-radius: 15px;
     border: 2px solid black;
     margin: 10px 20px;
   }
