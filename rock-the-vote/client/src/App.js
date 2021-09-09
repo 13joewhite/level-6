@@ -8,7 +8,7 @@ import { UserContext } from "./context/UserProvider"
 
 export default function App(){
   const { token } = useContext(UserContext)
-
+ 
   return ( 
     <div className="app">
       { token && <Navbar token={token} /> }

@@ -10,7 +10,7 @@ ReactDOM.render(
   <BrowserRouter>
     <UserProvider>
       <App/>
-    </UserProvider>
+    </UserProvider> 
   </BrowserRouter>, 
   document.getElementById('root')
 )
