@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { UserContext } from "../context/UserProvider"
 import PostForm from './PostForm.js'
 import PostList from './PostList.js'
+import "../css/PostForm.css"
 
 export default function Profile(){
   const { 
@@ -17,12 +18,14 @@ export default function Profile(){
     
   return (
     <div className="profile">
-      <h1>Welcome @{username}!</h1>
-      <h3>Add A Post</h3>
-      <PostForm 
-        addPost={addPost}
-      />
-      <h3>Your Posts</h3>
+      <div className="form">
+        <h1 className="text-primary">Welcome {username}!</h1>
+        <h3 className="text-secondary">Add A Post</h3>
+        <PostForm 
+          addPost={addPost}
+        />        
+        <h3 className="text-primary">Your Posts</h3>
+      </div>
       <PostList 
         posts={posts}
       />

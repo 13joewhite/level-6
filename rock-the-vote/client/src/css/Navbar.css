@@ -1,0 +1,36 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1a2639;
+    color: #d9dad7;
+    opacity: .8; 
+    width: 100%;
+    height: 70px;
+    padding: 0 30px;
+}
+
+.navbar .links {
+    color: #d9dad7;
+    padding: 10px 20px;
+    margin: 0 5px;
+    text-decoration: none;
+}
+
+.navbar .links:hover {
+    border-bottom: #c24d2c 2px solid;
+}
+
+.navbar .logo {
+    font-weight: 500;
+}
+
+.text-primary{
+    color: #c24d2c;
+}
+
+.navbar ul {
+    display: flex;
+    align-items: center;
+}
+

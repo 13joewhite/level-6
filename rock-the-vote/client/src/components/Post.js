@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { UserContext } from "../context/UserProvider"
 import LikeBtn from "./likeDislike/LikeBtn"
 import DislikeBtn from "./likeDislike/DislikeBtn"
+import "../css/Post.css"
 
 export default function Post(props){
   const [userComment, setUserComment] = useState('') //Do I need to create state?

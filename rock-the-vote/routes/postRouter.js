@@ -17,7 +17,7 @@ postRouter.get("/", (req, res, next) => {
 postRouter.get('/user', (req, res, next) => {
   Post.find({ user: req.user._id }, (err, post) => {
     if(err){
-      res.status(500)
+      res.status(500) 
       return next(err)
     }
     return res.status(200).send(post)
